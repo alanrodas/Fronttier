@@ -1,0 +1,17 @@
+repositories: [
+    {url: "sasasa"}
+]
+dependencies : [
+    "org.jquery" % "jquery" % "1.7"
+    "com.alanrodas" % "sarasa"
+    "jquery"
+    undercore#26.0.0
+    wawa=undercore#1.0
+    git://github.com/someone/some-package.git
+    https://github.com/someone/some-package.git = git@github.com:someone/some-package.git
+    svn+http://package.googlecode.com/svn/
+    svn+ssh://package.googlecode.com/svn/
+    svn+file:///path/to/svn/
+    someone/some-package
+    zip tar
+]
