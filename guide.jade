@@ -1,0 +1,532 @@
+extends base
+
+block content
+	.container
+		h1 Scaliapp
+		p Scaliapp is a library to create CLI ready applications in Scala easily.
+
+		article
+			section
+				h2 Installing
+				p.
+					To add the library to your project you need to download the
+					current version and add it in the library location of your
+					choice.
+				p.text-center
+					a.btn.btn-success(href="downloads/scaliapp_2.11.jar") Download the library
+				p.
+					Optionally, you may checkout the code from this repository
+					and build the project using sbt to publish it to your local
+					maven repository.
+				p.
+					Just run in a terminal.
+				pre
+					code.language-bash.
+						git clone git@github.com:alanrodas/scaliapp.git
+						cd scaliapp
+						sbt publishLocal
+				p.
+					Then, you should be able to use it by any program using sbt
+					in your local machine. Or, you can grab the .jar file from
+				pre
+					code.language-bash.
+						~/.ivy2/local/com.alanrodas/scaliapp_2.11/0.1/jars/scaliap_2.11.jar
+				p.
+					Note that Scaliapp is built against Scala 2.11.
+				p.
+					If you want to compile it against another Scala version, you
+					will need to change the build.sbt file in the project folder.
+					Change the *scalaVersion* variable to the desired version,
+					such as:
+				pre
+					code.language-scala.
+						scalaVersion := "2.11.2"
+				p.
+					Then compile with sbt publish
+				.callout.callout-info.
+					Future versions will hopefully be hosted in a maven repository so you can add it
+					to your projects easily. Please be patience.
+		article
+			section
+				h2 Usage
+				p.
+					After installing, you just need to do the following to your
+					main object (MainApp for this example):
+				ul
+					li Import com.alanrodas.scaliapp._
+					li Make MainApp extend CLIApp
+					li.
+						Define your commands in the body of the MainApp object
+						using the Scaliapp DSL.
+				p.
+					You are all set. Now you just need to call you application
+					with the arguments expected and everything should be working.
+		article
+			section
+				h2 DSL
+				p.
+					Scaliapp provides a simple set of functions and object
+					builder in order to provide a simple way to define commands,
+					arguments and flags in the body of the main object. This set
+					of functions and methods end up generating a DSL like
+					language that you can use to configure your application
+					expected behavior when called from the command line with
+					different sets of arguments.
+			section
+				h4 Defining the short and long parameter signs
+				p.
+					A command line application may expect a number of values to
+					be passed to it, but also a set of arguments and flags
+					(parameters) that may be used to modify the behavior of the
+					application. Common examples are the --force or -f
+					modifiers, or the --verbose or -v.
+				p.
+					As it can be seen, this parameters take a special sign
+					before their identifier. This sign is what identifies a
+					parameter, and distinguish it from a value pass to the
+					command. In unix systems the sign for short parameters (that
+					is, one letter only) is "-" (dash). Windows systems usually
+					use the "/" sign (slash) for this parameters. For long name
+					parameters (more than one character), a double dash is used
+					in unix systems ("--") while the same slash is used in
+					windows ("/").
+				p.
+					Scaliapp allows you to change the long and short signs used
+					by the application by overriding the longParamSign and the
+					shortParamSign variables defined in CLIApp.
+				p.
+					So to change it, just assign your desired sign as the
+					following example:
+				pre
+					code.language-scala.
+						object MainApp extends CLIApp {
+							longParamSign = "/"
+							shortParamSign = "/"
+						}
+				p.
+					Scaliapp uses the unix standard as a default, no matter if
+					you are in a Windows or a Unix system.
+				.callout.callout-warning.
+					In the rest of the document you will find references to
+					flags and arguments called in the UNIX format ("-" and "--"),
+					but be aware that this can be changed if you wish with the
+					aforementioned variables.
+				.callout.callout-info.
+					Future versions may default to the OS specific default, but
+					will allow you to change it by using the aforementioned code.
+			section
+				h4 Defining flags
+				p.
+					A flag is a boolean value that is passed to the application
+					in the form of a parameter. Common examples of flags in a
+					command line app are verbose or force which also have their
+					short versions as v and f. Flags may be created by the flag
+					function that is in scope when importing Scaliapp.
+				p.
+					The flag function returns a builder object that needs to be
+					configured correctly in order to properly define a flag as
+					you want it.
+				p.
+					The following is a flag definition for verbose that can be
+					called as --verbose or as -v:
+				pre
+					code.language-scala.
+						flag named "verbose" alias "v" as false
+				p.
+					The following is also valid and defines the same thing
+				pre
+					code.language-scala.
+						flag named "v" alias "verbose" as false
+				p.
+					The name is always needed, but the alias may be omitted.
+					The as method build the actual flag definition to use, and
+					sets it's default value. Most flags default to false, but
+					in rare occasions, true may be the desired default value.
+				p.
+					Here is a last example of a flag -f that defaults to true.
+				pre
+					code.language-scala.
+						flag named "f" as true
+				p.
+					Flags are then added to a command definition so that, when
+					called from the command line, those arguments are checked
+					for existence. If they were defined, the opposite of the
+					default defined is returned when asking for it's value.
+			section
+				h4 Defining arguments
+				p.
+					Arguments are pretty much like flags, but they may take
+					additional values which may need or not to be present.
+				p.
+					Consider for example the argument "-m" in the git commit
+					command. This command takes one argument, that is the commit
+					message. The commit message cannot be omitted, so it has no
+					default value. An argument such as that will be defined as:
+				pre
+					code.language-scala.
+						arg named "m" taking 1 value
+				.callout.callout-warning
+					h4 WARNING
+					p.
+						If the argument is expected to take more than one
+						argument, then values may be used instead of values.
+						Both methods are analogous and the two versions are
+						provided just for readability. For example:
+					pre
+						code.language-scala.
+							arg named "m" taking 1 values
+					p.
+						Defines exactly the same argument as above.
+				p.
+					When an argument takes a value that can be omitted,
+					you may specify a default value to it with the as method,
+					and providing a list of the default values. Consider a
+					command that takes a number, and returns the number
+					converted in an ordering. So (1 -> 1st, 2 -> 2nd, 3 -> 3rd,
+					4 -> 4th, 5 -> 5th, and so on).
+				p.
+					The argument *ordSuffix* determines the values appended
+					to the four first elements if given. The default values
+					should be english versions, so "st", "nd", "rd" and "th"
+					will be used if this argument is not passed. Such an
+					argument will be defined as:
+				pre
+					code.language-scala.
+						arg named "ordSuffix" taking 4 as List("st", "nd", "rd", "th")
+				p.
+					The command with such an argument may be later called as:
+				pre
+					code.language-bash.
+						$ command 5
+						5th
+				p or as:
+					pre
+						code.language-bash.
+							$ command 5 --ordSuffix ro do ro to
+							5to
+				p.
+					A last possibility for arguments is that they expect a
+					set of mandatory values, and a set of optional ones later.
+				p.
+					You may define this kind of argument by just passing
+					less values than the amount taken by the arguments to
+					the default. Let's take the example of "oneMandatoryTwoOptional"
+					This argument takes 3 values, one of which is mandatory, and
+					the other two are optional. This will be defined as:
+				pre
+					code.language-scala.
+						arg named "oneMandatoryTwoOptional" taking 3 as List("second", "third")
+				p.
+					The second and third values will be used if the command
+					is called as:
+				pre
+					code.language-bash.
+						command --oneMandatoryTwoOptional first
+				p.
+					But one value should always be passed to the argument,
+					or an error will raise.
+			section
+				h4 Defining values
+				p.
+					Some commands expect a specific amount of values passed to
+					them. This values may be mandatory, or optional and have a
+					default value.
+				p.
+					An example is the *git push* command, which expects a
+					"target" repository and a "branch" as optional values that
+					default to "origin" and "master" respectively (I know that
+					this is not exactly true, but please allow me to simplify
+					"git push" behavior for the sake of this guide)
+				p.
+					So, a value for this cases also have a name and a default
+					value. Such values may be defined with the value function,
+					and configuring the name and the default value. See the
+					following example:
+				pre
+					code.language-scala.
+						value named "target" as 'origin'
+				p.
+					If you expect a mandatory value, then use "mandatory" to
+					build the value instead of "as", as shown in the following
+					example:
+				pre
+					code.language-scala.
+						value named "fileName" mandatory
+				p.
+					When adding values to a command definition you should
+					consider that the expected order is that the mandatory
+					values are added first. If you don't follow the right order
+					an exception warning about an incorrect declaration will
+					raise.
+			section
+				h4 Defining commands
+				p.
+					Command are the main unit of execution in Scaliapp. Whenever
+					you execute an application built with Scaliapp, a command is
+					executed.
+				p.
+					Each command contains it's own set of flags, arguments and
+					values as well as a callback function to executed when
+					called. There are two kind of commands, a named command,
+					that is, with a specific name given (Can be multiple one in
+					an application given that the names are not duplicated), and
+					the root command (Only one in the application).
+				p.
+					For creating the root command the "root" function is
+					provided by Scaliapp. This command expects an implicit
+					CommandManager which is provided by CLIApp. We will focus
+					on the root case first, and see the named command examples
+					later on.
+				.callout.callout-info
+					If you do not want to extend CLIApp in your application, you
+					can still make use of Scaliapp. Just instantiate a
+					CommandManager as an implicit value wherever you want to
+					define your commands use the "setSigns" method to configure
+					the long and short signs (only if you are not planning to
+					use the defaults) and then call "execute" on it with the
+					values that your application was run with.
+				p.
+					So, if you want to call your application as 
+				pre
+					code.language-bash.
+						myApp <fileName> [-f | --force][-v | --verbose]
+				p.
+					with optional flags -v or --verbose and -f or --force and
+					that takes one mandatory value by the name of "fileName",
+					you should use the following code in order to instantiate
+					the command:
+				pre
+					code.language-scala.
+						root accepts
+							(flag named "verbose" alias "v" as false) accepts
+							(flag named "force" alias "f" as false) receives
+							(value named "fileName" mandatory) does {command =>
+								// Your action to perform on command call here
+						}
+				p.
+					 "accepts" method in the CommandBuilder defines the flags
+					 and arguments for the command. You may call "accepts" with
+					 just one parameter or with a sequence of parameters. If you
+					 are planning to support a large set of parameters, it will
+					 be better to use the sequence form, as it's cleaner. The
+					 same goes for values, that are added with the "receives"
+					 method, and can also take a sequence of values instead of
+					 just one. That said, the following code defines exactly
+					 the same command as before:
+				pre
+					code.language-scala.
+						root accepts Seq(
+							flag named "verbose" alias "v" as false,
+							flag named "force" alias "f" as false
+						) receives Seq(
+							value named "fileName" mandatory
+						) does {command =>
+							// Your action to perform on command call here
+						}
+				p.
+					The "does" method takes the function to execute when this
+					command is called and also constructs the actual command
+					from the builder. We will return to this command in a later
+					section, for now, just consider that you need to have the
+					"does" method at the end of your command definition.
+				p.
+					In some cases, your command may take a unlimited number of
+					values. Consider for example, the "rm" command in unix,
+					which takes any amount of file names, and deletes them.
+					For this cases, you may want to use the "multipleValues"
+					method instead of "receives". This method tells Scaliapp
+					that this command takes an unlimited number of values. So,
+					an "rm" like command will be defined as:
+				pre
+					code.language-scala.
+						root accepts Seq(
+							flag named "force" alias "f" as false
+						) multipleValues does {command =>
+							// Your action to perform on command call here
+						}
+				p.
+					In this case, we are defining the command to accept an
+					unlimited number of values, but we may want to declare an
+					expected minimum or maximum amount of values. For example
+					"rm" needs at least one file name to be passed. This can be
+					achieves with "minimumOf" and "maximumOf" methods. So for a
+					command that takes one or more values, you may define it as:
+				pre
+					code.language-scala.
+						root accepts Seq(
+							flag named "force" alias "f" as false
+						) multipleValues minimumOf 1 does {command =>
+							// Your action to perform on command call here
+						}
+				p.
+					For the sake of simplicity, you may avoid the
+					"multipleValues" method if you have a minimum or maximum
+					defined, so the above becomes:
+				pre
+					code.language-scala.
+						root accepts Seq(
+							flag named "force" alias "f" as false
+						) minimumOf 1 does {command =>
+							// Your action to perform on command call here
+						}
+				p.
+					Instead of having multiple applications and delegate the
+					passed arguments, you may have one applications with
+					multiple commands. This is where named commands comes in.
+					Command in the form of "git push" or "git add" may be
+					defined as named commands "push" and "add".
+				.callout.callout-info.
+					Of course nothing stops you from delegating to a second
+					application if you wish, but you are not forced to do so.
+				p.
+					A named command may be defined with the "command" function,
+					and setting it's name with the "named" method. This commands
+					can then be configured as the previously seen commands. Here
+					is an example of "push" and "add" commands.
+				pre
+					code.language-scala.
+						command named "push" accepts Seq(
+							flag named "verbose" alias "v" as false,
+							flag named "quiet" alias "q" as false,
+							flag named "dry-run" alias "n" as false,
+							flag named "force" alias "f" as false,
+							arg named "repo" taking 1 value,
+							arg named "recurse-submodules" taking 1 as List("check"),
+							arg named "exec" taking 1 value
+						) receives Seq(
+							value named "target" as "origin",
+							value named "branch" as "master"
+						) does { commandCall =>
+							// Your action to perform on command call here
+						}
+						command named "add" accepts Seq(
+							flag named "quiet" alias "q" as false,
+							flag named "dry-run" alias "n" as false,
+							flag named "force" alias "f" as false,
+							flag named "intent-to-add" alias "N" as false,
+							flag named "all" alias "A" as false
+						) minimumOf 1 does { commandCall =>
+							// Your action to perform on command call here
+						}
+				p.
+					This previous sample pretty much sums up what you can define
+					as a command in Scaliapp.
+		article
+			section
+				h2 Performing actions and using the data
+				p.
+					As we have seen, each command takes a function in the "does"
+					method that is the function to call when that given command
+					is called. This function takes a "Command", which holds all
+					the values passed to the command by the user, as well as the
+					default values.
+				p.
+					Typically you should want to analyze the values passed to
+					your function. The following operations can be performed in
+					order to access the data.
+				ul
+					li
+						b allFlags
+						em (Returns all the flags defined for this command)
+					li
+						b allArguments
+						em (Returns all arguments defined for this command)
+					li
+						b flag(name : String)
+						em (Returns the flag by the name or alias "name")
+					li
+						b argument(name : String)
+						em (Returns the argument by the name or alias "name")
+					li
+						b flagPassed(name : String)
+						em (Returns true if the flag by the name or alias "name" has been passed by the user)
+					li
+						b argumentPassed(name : String)
+						em (Returns true if the argument by the name or alias "name" has been passed by the user)
+					li
+						b flagValue(name : String)
+						em (Returns the value of the flag by the name or alias "name")
+					li
+						b argumentValue(name : String)
+						em (Returns the value of the sbtargument by the name or alias "name")
+					li
+						b name
+						em (Returns the name of the called command)
+				p.
+					Additionally, if the command takes a defined set of values
+					that are identified by name you can use the following set of
+					methods to access the values:
+				ul
+					li
+						b allValues
+						em (Returns all the values for this command)
+					li
+						b value(name : String)
+						em (Returns the value by the name or alias "name")
+					li
+						b valuePassed(name : String)
+						em (Returns true if the value by the name "name" has been passed by the user)
+				p.
+					If the command takes an unlimited number of values, you can
+					get them with the following:
+				ul
+					li
+						b allValues
+						em (Returns all the values for this command)
+		article
+			section
+				h2 Exceptions
+				p.
+					Scaliapp throws a set of different exceptions in different
+					occasions.
+				p.
+					Scaliapp will throw an InvalidCommandDefinition if any
+					defined command is invalid. This will happen if:
+				ul
+					li Any parameter does not have a name.
+					li There are two commands with the same name.
+					li There are two parameters with the same name or alias.
+					li A mandatory value is defined after an optional value.
+				p.
+					Scaliapp also throws two other kind of errors. An
+					InvalidCommandCall is thrown when the set of arguments used
+					to call the application is not a valid one
+				ul
+					li A parameter that was not defined was passed
+					li The minimum number of values was not met
+					li The maximum number of values was exceeded
+					li.
+						There is no root command and the first argument passed
+						does not match any defined command name
+				p.
+					This last case will throw a NotFoundCommand exception, which
+					is a special case of InvalidCommandCall.
+				.callout.callout-info.
+					This kind of exceptions are catched by CLIApp and a special
+					action is performed. You can set the function to execute in
+					case the command was not found, or in case the command call
+					is invalid.
+				p.
+					The third kind of exception thrown is an AbstractInvalidName,
+					which is thrown when you want to access a value or parameter
+					with a name that does not exists.
+		article
+			section
+				h2 Handling Exceptions
+				p.
+					The CLIApp trait provides two variables, "onCommandNotFound"
+					and "onInvalidCommandCall". This variables are of the type
+					"NotFoundCommand => Unit" and "InvalidCommandCall => Unit"
+					respectively. These functions are executed when an error of
+					the former types is raised, so you can take a specific
+					action in case a command call was invalid. By default, the
+					"onCommandNotFound" and "onInvalidCommandCall" just outpu
+					to the console the error message with a nice red color. If
+					you want you can modify these functions in order to perform
+					a more specific action.
+				pre
+					code.language-scala.
+						object MainApp extends CLIApp {
+							onCommandNotFound = {e => printGeneralHelp()}
+							onInvalidCommandCall = {e => printHelpFor(e.command)}
+						}

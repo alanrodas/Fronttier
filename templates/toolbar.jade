@@ -1,0 +1,42 @@
+mixin itemName(item)
+	if item.icon
+		i(class=item.icon)
+	if item.icon && item.title
+		&nbsp;
+	if item.title
+		= item.title
+
+mixin itemLink(item)
+	a(href=item.link ? item.link : "#")&attributes(attributes)
+		+itemName(item)
+
+mixin menuItems(itemList)
+	each item in itemList
+		if item.children
+			li.dropdown
+				a.dropdown-toggle(href="#" data-toggle="dropdown")
+					+itemLink(item)
+					i.caret
+				ul.dropdown-menu
+					+menuItems(item.children)
+		else if item.link
+			li
+				+itemLink(item)
+
+mixin menu(title, elements)
+	header.scrolled#header
+		nav.navbar.navbar-inverse.navbar-default.navbar-fixed-top(role="navigation")
+			.container-fluid
+				.navbar-header
+					button.navbar-toggle(data-toggle="collapse" data-target="#navigation")
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					.navbar-brand-container
+						+itemLink(title)(class="navbar-brand")
+						//a.navbar-brand(href= titleLink)= title
+				.collapse.navbar-collapse#navigation
+					ul.nav.navbar-nav.navbar-right
+						+menuItems(elements)
+	.main-content(style="padding-top:50px;")/

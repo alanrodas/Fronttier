@@ -1,0 +1,6 @@
+.jumbotron {
+	background-color: #222;
+	background-image: url("../images/background.jpg");
+	color: #DDD;
+}
+.jumbotron h1 { color: #428bca; }

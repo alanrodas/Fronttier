@@ -1,0 +1,10 @@
+<!ELEMENT fronttier (repositories?, dependencies)>
+<!ELEMENT repositories (repository*)>
+<!ELEMENT repository EMPTY>
+<!ATTLIST repository type CDATA #IMPLIED>
+<!ATTLIST repository url CDATA #REQUIRED>
+<!ELEMENT dependencies (dependency*)>
+<!ELEMENT dependency EMPTY>
+<!ATTLIST dependency group CDATA #REQUIRED>
+<!ATTLIST dependency name CDATA #REQUIRED>
+<!ATTLIST dependency ver CDATA #IMPLIED>

@@ -1,0 +1,22 @@
+extends templates/base
+
+append stylesheets
+	// link(rel="stylesheet" href="stylesheets/coffee-and-cream.css")
+	link(rel="stylesheet" href="stylesheets/fronttier.css")
+block title
+	title Scaliapp
+	meta(name="description" content="A Dependency Manager for the front-end in Scala.")
+	meta(name="author" content="Alan Rodas Bonjour")
+
+block toolbar
+	+menu({title:"Fronttier", icon:"fa fa-download", link:"index.html"}, [
+		// {title:"Downloads", link:"download.html"},
+		// {title:"Guide", link:"guide.html"},
+		// {title:"API", link:"api/index.html#com.alanrodas.scaliapp.package"},
+		{icon:"fa fa-github", link:"https://github.com/alanrodas/fronttier"}
+	])
+
+block footer
+	+copyright(2014, "Alan Rodas Bonjour")
+	a.scrolltop.scrolltop-success(title="Top" href="#")
+		i.fa.fa-arrow-up

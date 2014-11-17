@@ -1,0 +1,362 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>runtime - com.alanrodas.scaliapp.core.runtime</title>
+          <meta name="description" content="runtime - com.alanrodas.scaliapp.core.runtime" />
+          <meta name="keywords" content="runtime com.alanrodas.scaliapp.core.runtime" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../../index.html';
+            var hash = 'com.alanrodas.scaliapp.core.runtime.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../../../lib/package_big.png" />
+        <p id="owner"><a href="../../../../package.html" class="extype" name="com">com</a>.<a href="../../../package.html" class="extype" name="com.alanrodas">alanrodas</a>.<a href="../../package.html" class="extype" name="com.alanrodas.scaliapp">scaliapp</a>.<a href="../package.html" class="extype" name="com.alanrodas.scaliapp.core">core</a></p>
+        <h1>runtime</h1> <span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">runtime</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>This package defines all the values processed
+after parsing the user call.</p><p>Classes defined in this package are passed to the callback
+functions in order to be able to fetch the user data.
+</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.alanrodas.scaliapp.core.runtime"><span>runtime</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.alanrodas.scaliapp.core.runtime.AbstractArgument" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="AbstractArgument[T]extendsAnyRef"></a>
+      <a id="AbstractArgument[T]:AbstractArgument[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="AbstractArgument.html"><span class="name">AbstractArgument</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@AbstractArgument[T]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This is an abstract implementation of any kind of argument,
+weather flags or arguments.</p><div class="fullcomment"><div class="comment cmt"><p>This is an abstract implementation of any kind of argument,
+weather flags or arguments.</p><p>This class defines things such as the long and short name
+of the argument, a defined accessor to check if the argument
+has effectively been passed as an argument or if the default
+was used.</p><p>It additionally defines an <i>allValues</i> method that returns
+a value of type <i>T</i>. This method can be used in order to retrieve
+the value of the argument as the type defined by the subclasses of
+AbstractArgument.</p><p>There are two known subclasses of AbstractArgument
+<a href="Flag.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Flag">Flag</a> and
+<a href="Argument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Argument">Argument</a>. The first one defines
+<i>T</i> as <i>Boolean</i>, while the second one allows for multiple
+values to be retrieved in the form of a <i>Seq[String]</i>. They both
+also provide more specific forms to fetch the value of the argument.
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The type of the values that this argument represents
+</p></dd></dl></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.AbstractValue" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="AbstractValueextendsAnyRef"></a>
+      <a id="AbstractValue:AbstractValue"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="AbstractValue.html"><span class="name">AbstractValue</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@AbstractValueextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Represents any value passed as an argument to a command.</p><div class="fullcomment"><div class="comment cmt"><p>Represents any value passed as an argument to a command.</p><p>This abstract class represent any form of value passed, weather
+named, or unnamed. It has two known subclasses,
+<a href="UnnamedValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.UnnamedValue">UnnamedValue</a> and
+<a href="NamedValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.NamedValue">NamedValue</a>.
+</p></div></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.Argument" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ArgumentextendsAbstractArgument[Seq[String]]withProductwithSerializable"></a>
+      <a id="Argument:Argument"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Argument.html"><span class="name">Argument</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="altName">altName: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="values">values: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="defined">defined: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <a href="AbstractArgument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractArgument">AbstractArgument</a>[<span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@ArgumentextendsAbstractArgument[Seq[String]]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This is a special case of
+<a href="AbstractArgument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractArgument">AbstractArgument</a>
+where the value is a Seq[String].</p><div class="fullcomment"><div class="comment cmt"><p>This is a special case of
+<a href="AbstractArgument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractArgument">AbstractArgument</a>
+where the value is a Seq[String].</p><p>This class provides the <i>valuesAmount</i> that returns the number
+of values passed to the argument, as well as a <i>value[T](i : Int)</i>
+that returns the value at position <i>i</i> as an instance of <i>T</i>
+providing that an implicit conversion between <i>String</i> and the
+type <i>T</i>.</p><p>Scaliapp provides the package <span class="extype" name="com.alanrodas.scaliapp.implicits">com.alanrodas.scaliapp.implicits</span> that
+provides a set of implicit conversions between <i>String</i> and different
+types, such as <i>Int</i> and <i>Boolean</i>.
+</p></div><dl class="paramcmts block"><dt class="param">name</dt><dd class="cmt"><p>The name of the argument or flag, weather short or long</p></dd><dt class="param">altName</dt><dd class="cmt"><p>An additional optional name for the argument or flag. short if name was long, and long if it was short</p></dd><dt class="param">values</dt><dd class="cmt"><p>The sequence of values of the current argument</p></dd><dt class="param">defined</dt><dd class="cmt"><p><i>true</i> if it was defined by the user, <i>false</i> otherwise
+</p></dd></dl></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.Command" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="CommandextendsAnyRef"></a>
+      <a id="Command:Command"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Command.html"><span class="name">Command</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@CommandextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Represents an abstract command call and the values used to call it.</p><div class="fullcomment"><div class="comment cmt"><p>Represents an abstract command call and the values used to call it.</p><p>This is an abstract representation of a command call. That is, this class holds
+the values of flags and arguments on which a user has called a given command,
+included the defaulted values in its definition.</p><p>It has two known concrete subclasses
+<a href="FiniteValuesCommand.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.FiniteValuesCommand">CalledNamedValuedCommand</a> and
+<a href="MultipleValuesCommand.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.MultipleValuesCommand">CalledUnnamedValuedCommand</a>
+that represent a call to a <span class="extype" name="FiniteValuesCommandDefinition">NamedValuedCommand</span>
+and a <span class="extype" name="MultipleValuesCommandDefinition">UnnamedValuedCommand</span> respectively.
+They both add the values that a command has been called with in a different way.</p><p>To create an instance of this class, the values that the user has employed when
+calling the matching command as well as the default values are expected to be given as
+an argument to the constructor. The command name is also needed.</p><p>A CommandCall with the matching information is then passed as an argument to the
+callback in the corresponding <a href="../definitions/CommandDefinition.html" class="extype" name="com.alanrodas.scaliapp.core.definitions.CommandDefinition">Command</a>.
+</p></div></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.FiniteValuesCommand" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="FiniteValuesCommandextendsCommandwithProductwithSerializable"></a>
+      <a id="FiniteValuesCommand:FiniteValuesCommand"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="FiniteValuesCommand.html"><span class="name">FiniteValuesCommand</span></a><span class="params">(<span name="command">command: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="values">values: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="NamedValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.NamedValue">NamedValue</a>]</span>, <span name="passedFlags">passedFlags: <span class="extype" name="scala.Iterable">Iterable</span>[<a href="Flag.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Flag">Flag</a>]</span>, <span name="passedArgs">passedArgs: <span class="extype" name="scala.Iterable">Iterable</span>[<a href="Argument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Argument">Argument</a>]</span>)</span><span class="result"> extends <a href="Command.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Command">Command</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@FiniteValuesCommandextendsCommandwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This is a concrete implementation for
+<a href="Command.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Command">CalledCommand</a> for
+<span class="extype" name="FiniteValuesCommandDefinition">NamedValuedCommand</span>.</p><div class="fullcomment"><div class="comment cmt"><p>This is a concrete implementation for
+<a href="Command.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Command">CalledCommand</a> for
+<span class="extype" name="FiniteValuesCommandDefinition">NamedValuedCommand</span>.
+It adds the values that the command was called with as a set of
+<a href="NamedValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.NamedValue">NamedValue</a>.</p><p>Note that the values may contain also defaulted values, as they should be passed
+when creating instances of this class.
+</p></div><dl class="paramcmts block"><dt class="param">command</dt><dd class="cmt"><p>The called command name</p></dd><dt class="param">values</dt><dd class="cmt"><p>The values that were used to call this command</p></dd><dt class="param">passedFlags</dt><dd class="cmt"><p>The Flags that were used to call this command</p></dd><dt class="param">passedArgs</dt><dd class="cmt"><p>The Arguments that were used to call this command
+</p></dd></dl></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.Flag" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="FlagextendsAbstractArgument[Boolean]withProductwithSerializable"></a>
+      <a id="Flag:Flag"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Flag.html"><span class="name">Flag</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="altName">altName: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="value">value: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="defined">defined: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <a href="AbstractArgument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractArgument">AbstractArgument</a>[<span class="extype" name="scala.Boolean">Boolean</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@FlagextendsAbstractArgument[Boolean]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This is a special case of
+<a href="AbstractArgument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractArgument">AbstractArgument</a>
+where the value is a Boolean.</p><div class="fullcomment"><div class="comment cmt"><p>This is a special case of
+<a href="AbstractArgument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractArgument">AbstractArgument</a>
+where the value is a Boolean.</p><p>This class provides the <i>value</i> method as a way to access the
+argument value.
+</p></div><dl class="paramcmts block"><dt class="param">name</dt><dd class="cmt"><p>The name of the argument or flag, weather short or long</p></dd><dt class="param">altName</dt><dd class="cmt"><p>An additional optional name for the argument or flag. short if name was long, and long if it was short</p></dd><dt class="param">value</dt><dd class="cmt"><p>The value of the current argument</p></dd><dt class="param">defined</dt><dd class="cmt"><p><i>true</i> if it was defined by the user, <i>false</i> otherwise
+</p></dd></dl></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.MultipleValuesCommand" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="MultipleValuesCommandextendsCommandwithProductwithSerializable"></a>
+      <a id="MultipleValuesCommand:MultipleValuesCommand"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="MultipleValuesCommand.html"><span class="name">MultipleValuesCommand</span></a><span class="params">(<span name="command">command: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="values">values: <span class="extype" name="scala.List">List</span>[<a href="UnnamedValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.UnnamedValue">UnnamedValue</a>]</span>, <span name="passedFlags">passedFlags: <span class="extype" name="scala.Iterable">Iterable</span>[<a href="Flag.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Flag">Flag</a>]</span>, <span name="passedArgs">passedArgs: <span class="extype" name="scala.Iterable">Iterable</span>[<a href="Argument.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Argument">Argument</a>]</span>)</span><span class="result"> extends <a href="Command.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Command">Command</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@MultipleValuesCommandextendsCommandwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This is a concrete implementation for
+<a href="Command.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Command">CalledCommand</a> for
+<span class="extype" name="MultipleValuesCommandDefinition">UnnamedValuedCommand</span>.</p><div class="fullcomment"><div class="comment cmt"><p>This is a concrete implementation for
+<a href="Command.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.Command">CalledCommand</a> for
+<span class="extype" name="MultipleValuesCommandDefinition">UnnamedValuedCommand</span>.
+It adds the values that the command was called with as a set of
+<a href="UnnamedValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.UnnamedValue">UnnamedValue</a>.
+</p></div><dl class="paramcmts block"><dt class="param">command</dt><dd class="cmt"><p>The called command name</p></dd><dt class="param">values</dt><dd class="cmt"><p>The values that were used to call this command</p></dd><dt class="param">passedFlags</dt><dd class="cmt"><p>The Flags that were used to call this command</p></dd><dt class="param">passedArgs</dt><dd class="cmt"><p>The Arguments that were used to call this command
+</p></dd></dl></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.NamedValue" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="NamedValueextendsAbstractValuewithProductwithSerializable"></a>
+      <a id="NamedValue:NamedValue"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="NamedValue.html"><span class="name">NamedValue</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="defined">defined: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <a href="AbstractValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractValue">AbstractValue</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@NamedValueextendsAbstractValuewithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Represents a named value passed to a command.</p><div class="fullcomment"><div class="comment cmt"><p>Represents a named value passed to a command.</p><p>This is a concrete implementation of
+<a href="AbstractValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractValue">AbstractValue</a>
+for named values, that means, the values that are passed to a command
+that accepts a concrete amount of arguments.</p><p>This class also provides accessors for the name of the value and
+a boolean stating if the value was passed as an argument or if it
+is the default value.
+</p></div><dl class="paramcmts block"><dt class="param">name</dt><dd class="cmt"><p>The name of the value passed to the command</p></dd><dt class="param">value</dt><dd class="cmt"><p>The value passed to the command</p></dd><dt class="param">defined</dt><dd class="cmt"><p><i>true</i> if it was defined by the user, <i>false</i> otherwise
+</p></dd></dl></div>
+    </li><li name="com.alanrodas.scaliapp.core.runtime.UnnamedValue" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="UnnamedValueextendsAbstractValuewithProductwithSerializable"></a>
+      <a id="UnnamedValue:UnnamedValue"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="UnnamedValue.html"><span class="name">UnnamedValue</span></a><span class="params">(<span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <a href="AbstractValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractValue">AbstractValue</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.alanrodas.scaliapp.core.runtime.package@UnnamedValueextendsAbstractValuewithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Represents an unnamed value passed to a command.</p><div class="fullcomment"><div class="comment cmt"><p>Represents an unnamed value passed to a command.</p><p>This is a concrete implementation of
+<a href="AbstractValue.html" class="extype" name="com.alanrodas.scaliapp.core.runtime.AbstractValue">AbstractValue</a>
+for unnamed values, that means, the values that are passed to a command
+that accepts multiple arguments.
+</p></div><dl class="paramcmts block"><dt class="param">value</dt><dd class="cmt"><p>The value passed to the command
+</p></dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
