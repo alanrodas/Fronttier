@@ -1,4 +1,4 @@
-package com.alanrodas
+package com.alanrodas.test
 
 import org.scalatest._
 

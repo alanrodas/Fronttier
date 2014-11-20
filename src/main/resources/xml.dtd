@@ -1,0 +1,8 @@
+<!ELEMENT fronttier (repositories?, dependencies)>
+<!ELEMENT repositories (repository*)>
+<!ELEMENT repository (#PCDATA)>
+<!ELEMENT dependencies (dependency*)>
+<!ELEMENT dependency (group, name, version?)>
+<!ELEMENT group (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT version (#PCDATA)>

@@ -7,11 +7,12 @@
  * Created by: alanrodas
  * Last modification: 04/05/14 at 03:07
  */
-package com.alanrodas.fronttier
+package com.alanrodas.test.fronttier
 
 import rapture.fs._
 import rapture.core.strategy.throwExceptions
 import rapture.fs.platform.adaptive
+import com.alanrodas.fronttier._
 
 class PackageTests extends UnitSpec {
 

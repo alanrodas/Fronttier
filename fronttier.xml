@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fronttier PUBLIC "-/Fronttier/xml.dtd" "http://fronttier.alanrodas.com/dtd/xml.dtd">
+<fronttier>
+    <repositories>
+        <repository>
+            <type>git</type>
+            <url>http://myrepository.com</url>
+        </repository>
+        <repository>
+            <url>https://some-other-repo.org/repository</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <group>org.jquery</group>
+            <name>jquery</name>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <group>org.jquery</group>
+            <name>jquery-ui</name>
+        </dependency>
+    </dependencies>
+</fronttier>

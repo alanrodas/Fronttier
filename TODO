@@ -1,0 +1,13 @@
+- [Minor] Add custom URL with pattern in Dependencies
+- [Minor] Manually specify files when dependency download and allow to set an alias for them
+- [Major] Create a registry of currently installed dependencies by file in a directory so they are retrievable later on
+- [Major] Create a dependency repository database.
+- [Major] Remove downloaders and merge with repository kind. Making repository kind to custom kind.
+- [Major] Custom errors on failure so we have better messaging on failure
+- [Blocker] Find a way to remove mirroring at all.
+- [Minor] Remove Rapture IO. Replace with custom IO implementation.
+- [Major] Simplify parameter accesing on Scaliapp
+- [Major] Move terminal to scaliapp and make it lazy in most case scenarios so code is not executed, reducing time
+- [Blocker] Proper testing
+- [Blocker] Document with ScalaDoc
+- [Blocker] Add ScalaVCS compatibility (How? as repo??)

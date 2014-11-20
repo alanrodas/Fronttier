@@ -1,0 +1,11 @@
+
+repositories {
+	http://code.jquery.com/jquery-2.1.1.min.js
+	http://fronttier.alanrodas.com/repotest
+}
+
+dependencies {
+	com.alanrodas :: test :: 1.0
+	com.jperez :: sarasa
+}
+

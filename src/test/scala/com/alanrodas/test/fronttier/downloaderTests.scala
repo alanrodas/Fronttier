@@ -7,13 +7,14 @@
  * Created by: Alan Rodas Bonjour
  * Last modification: 03/05/14 at 23:41
  */
-package com.alanrodas.fronttier
+package com.alanrodas.test.fronttier
 
 import rapture.net._
 import rapture.fs._
 import rapture.fs.platform.adaptive
-import com.alanrodas.fronttier.HttpDownloader
+import com.alanrodas.fronttier._
 
+/*
 class HttpDownloaderTest extends UnitSpec {
 
 	"An HttpDownloader" should
@@ -33,7 +34,8 @@ class HttpDownloaderTest extends UnitSpec {
 				assert(true)
 			}
 
-			it should "throw an Throw a ArtifactNotFoundException if the URL is invalid" in {
+			it should "throw an ArtifactNotFoundException if the URL is invalid" in {
 				assert(true)
 			}
 }
+*/

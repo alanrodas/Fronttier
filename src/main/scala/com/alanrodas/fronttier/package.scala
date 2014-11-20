@@ -9,7 +9,6 @@ import rapture.uri.Url
 import rapture.core.timeSystems.javaUtil
 
 package object fronttier {
-
 	def localRepository = System.getProperty("user.home") + "/.fronttier"
 	def currentDirectory = System.getProperty("user.dir")
 

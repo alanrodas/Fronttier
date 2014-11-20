@@ -15,50 +15,52 @@ import rapture.io._
 import rapture.core.strategy.throwExceptions
 import rapture.fs.platform.adaptive
 import rapture.core.ParseException
-import rapture.core.ParseException
+import com.alanrodas.fronttier.io._
 
 trait Downloader {
-	def download(from: String, to: FileUrl = localRepository.toFile)
+	def download(destination : String, url : String, dependency : Dependency) : Boolean
 }
 
 object HttpDownloader extends Downloader {
-	private def fetch(implicit from: HttpUrl, to: FileUrl) {
-		val git = GIT clone ""
-		git add ""
-		git add ""
-		git commit()
 
-
-	}
-
-	private def unzip()(implicit to: FileUrl) {
-
-	}
-
-	private def untar()(implicit to: FileUrl) {
-
-	}
-
-  override def download(from: String, to: FileUrl = localRepository.toFile) {
-		Http.parse(from) match {
-			case Left(remoteUrl : HttpUrl) => {
-				remoteUrl match {
-					case s if s.isZippedResource => {fetch; unzip}
-					case s if s.isTaredResource => {fetch; untar}
-					case s if s.isResource => {fetch}
-					case s if s.isRepositoryFolder => {}
-						case _ =>
-				}
-			}
-			case Right(exception : ParseException) => exception
+	def download(destination: String, url : String) : Boolean = {
+		try {
+			Http.parse(url) > (destination.asFile / url.split("/").last)
+			true
+		} catch {
+			case e : java.io.FileNotFoundException => false
 		}
-  }
+	}
+
+	def download(destination : String, url : String, dependency : Dependency) : Boolean = {
+		implicit var remoteLocation : HttpUrl = dependency.remoteLocation(Http.parse(url))
+		implicit var localDestination : FileUrl = destination.asFile
+		val remoteDeclarationFile = dependency.remoteDeclarationFile
+		val localDeclarationFile = dependency.declarationFile
+		try {
+			remoteDeclarationFile > localDeclarationFile
+			for (file <- dependency.files) {
+				remoteLocation / file > (localDestination / file)
+			}
+			true
+		} catch {
+			case e : java.io.FileNotFoundException => false
+		}
+	}
 }
 
 object GitDownloader extends Downloader {
-	override def download(from: String, to: FileUrl = localRepository.toFile) {}
+	//override def download(from: String, to: FileUrl = localRepository.toFile) {}
+
+	def download(destination : String, url : String, dependency : Dependency) = {
+		false
+	}
 }
 
 object SvnDownloader extends Downloader {
-	override def download(from: String, to: FileUrl = localRepository.toFile) {}
+	//override def download(from: String, to: FileUrl = localRepository.toFile) {}
+
+	def download(destination : String, url : String, dependency : Dependency) = {
+		false
+	}
 }
