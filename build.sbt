@@ -1,21 +1,13 @@
-organization := "com.alanrodas"
+organization := Fronttier.organization
 
-name := "fronttier"
+name := Fronttier.name("parent")
 
-version := "0.1"
+version := Fronttier.version
 
-scalaVersion := "2.11.2"
+crossScalaVersions := Fronttier.crossScalaVersions
 
-sbtVersion := "0.13.6"
+lazy val core = project
 
-sbtPlugin := true
+lazy val cli = project dependsOn core
 
-resolvers += "fwbrasil" at "http://fwbrasil.net/maven"
-
-libraryDependencies ++= Seq(
-	"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2",
-	"org.scala-lang.modules" %% "scala-xml" % "1.0.2",
-	"com.propensive" %% "rapture-io" % "0.9.1",
-	"com.propensive" %% "rapture-fs" % "0.9.1",
-	"com.propensive" %% "rapture-net" % "0.9.0"
-)
+lazy val sbt_plugin = project dependsOn core

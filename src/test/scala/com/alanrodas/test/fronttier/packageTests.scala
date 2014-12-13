@@ -9,10 +9,12 @@
  */
 package com.alanrodas.test.fronttier
 
+/*
 import rapture.fs._
 import rapture.core.strategy.throwExceptions
 import rapture.fs.platform.adaptive
 import com.alanrodas.fronttier._
+
 
 class PackageTests extends UnitSpec {
 
@@ -24,3 +26,4 @@ class PackageTests extends UnitSpec {
 
 	}
 }
+*/

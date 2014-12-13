@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE fronttier PUBLIC "-/Fronttier/xmlattr.dtd"
     "http://fronttier.alanrodas.com/dtd/xmlattr.dtd">
-<fronttier>
+<fronttier group="com.alanrodas" name="fronttier" version="0.2">
     <repositories>
-        <repository type="git" url="http://myrepository.com"/>
-        <repository url="https://some-other-repo.org/repository"/>
+        <repository type="git" url="git@github.com:alanrodas/bootstrap-blockquotes.git"/>
     </repositories>
     <dependencies>
-        <dependency group="org.jquery" name="jquery" ver="2.11.0"/>
-        <dependency group="org.jquery" name="jquery-ui"/>
+        <dependency group="org.bootstrap" name="bootstrap" ver="3.3.1"/>
+        <dependency group="io.github" name="font-awesome" ver="4.2.0"/>
     </dependencies>
 </fronttier>

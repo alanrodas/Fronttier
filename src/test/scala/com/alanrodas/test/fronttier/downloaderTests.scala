@@ -9,12 +9,13 @@
  */
 package com.alanrodas.test.fronttier
 
+/*
 import rapture.net._
 import rapture.fs._
 import rapture.fs.platform.adaptive
 import com.alanrodas.fronttier._
 
-/*
+
 class HttpDownloaderTest extends UnitSpec {
 
 	"An HttpDownloader" should
