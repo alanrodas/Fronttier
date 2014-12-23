@@ -1,4 +1,16 @@
-
+/*
+ * Copyright 2014 Alan Rodas Bonjour
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 
 package com.alanrodas.fronttier
 
@@ -7,6 +19,7 @@ import com.alanrodas.fronttier.io._
 import rapture.fs._
 import platform.adaptive
 import com.typesafe.config._
+import com.alanrodas.scaland.logging._
 
 case class FronttierDefaults(useCache : Option[Boolean], force : Option[Boolean],
                              verbose : Option[Boolean], destination : Option[String]) {
@@ -88,10 +101,15 @@ object FronttierDefaults {
 
 case class FronttierConfiguration(useCache : Boolean, force : Boolean,
     verbose : Boolean, destination : FileUrl) {
-  import com.typesafe.scalalogging.slf4j.Logger
   val cache : Cache = if (useCache) Cache() else NoCache
   def configureLogger(logger : Logger): FronttierConfiguration = {
-    if (verbose) logger.setAsInfo else logger.setAsWarn
+    logger.level = if (verbose) Info else Warn
     this
+  }
+}
+
+object FronttierConfiguration {
+  def apply(useCache : Boolean, force : Boolean, verbose : Boolean, destination : String) : FronttierConfiguration = {
+    FronttierConfiguration(useCache, force, verbose, destination.toFile)
   }
 }

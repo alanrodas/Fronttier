@@ -1,5 +1,3 @@
-import sbt._
-
 organization := Fronttier.organization
 
 name := "sbt-fronttier"
@@ -12,4 +10,4 @@ sbtVersion := "0.13.5"
 
 sbtPlugin := true
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.0.0")
+publishTo <<= version {Fronttier.publishLocation}

@@ -4,7 +4,11 @@ name := Fronttier.name
 
 version := Fronttier.version
 
+scalaVersion := Fronttier.scalaVersion
+
 crossScalaVersions := Fronttier.crossScalaVersions
+
+publishTo <<= version {Fronttier.publishLocation}
 
 libraryDependencies ++= Seq(
 	"org.scala-lang.modules" % "scala-parser-combinators_2.11" % "1.0.2",
@@ -18,8 +22,7 @@ libraryDependencies ++= Seq(
 resolvers += "alanrodas" at "http://alanrodas.com/maven/releases"
 
 libraryDependencies ++= Seq(
-	"com.alanrodas" %% "scaland" % "0.1",
-	"com.typesafe.scala-logging" %% "scala-logging-api" % "2.1.2",
-	"com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+	"com.alanrodas" %% "scaland" % "0.2",
+	"com.alanrodas" %% "scaland-logging" % "0.2",
 	"ch.qos.logback" % "logback-classic" % "1.1.2"
 )

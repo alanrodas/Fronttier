@@ -1,23 +1,17 @@
-/** ********************************************************************************************
-  * Testing
-  * Version 0.1
-  *
-  * The primary distribution site is
-  *
-  * http://scalavcs.alanrodas.com
-  *
-  * Copyright 2014 alanrodas
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
-  * except in compliance with the License. You may obtain a copy of the License at
-  *
-  * http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software distributed under the
-  * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
-  * either express or implied. See the License for the specific language governing permissions
-  * and limitations under the License.
-  * *********************************************************************************************/
+/*
+ * Copyright 2014 Alan Rodas Bonjour
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
+
 package com.alanrodas.fronttier
 
 import com.alanrodas.fronttier.parsers._
@@ -26,10 +20,7 @@ import rapture.fs._
 import platform.adaptive
 import com.typesafe.config._
 import rapture.core.strategy.throwExceptions
-import com.typesafe.scalalogging.slf4j.Logger
-
-import com.typesafe.scalalogging.slf4j.LazyLogging
-
+import com.alanrodas.scaland.logging._
 
 class Fronttier(val workingDir : FileUrl, val destination : FileUrl, val parsers : Seq[ConfigParser],
     val configuration : FronttierConfiguration) extends LazyLogging {
@@ -70,8 +61,12 @@ class Fronttier(val workingDir : FileUrl, val destination : FileUrl, val parsers
   }
 
   private def afterDownload(maybeConfig : Option[Configuration], errors : Seq[FronttierException]): Unit = {
-    if (maybeConfig.isDefined) {database.save(maybeConfig.get)}
-    else {for (error <- errors) logger.error(error.getMessage)}
+    if (maybeConfig.isDefined) {
+      database.save(maybeConfig.get)
+    }
+    else {
+      for (error <- errors) logger.error(error.getMessage)
+    }
   }
 
   private def afterDownloadRoot(config : Configuration, errors : Seq[FronttierException]): Unit = {
@@ -81,7 +76,7 @@ class Fronttier(val workingDir : FileUrl, val destination : FileUrl, val parsers
     logger.info("===========================")
     logger.info("")
     if (errors.isEmpty) {
-      logger.setAsInfo
+      logger.level = Info
       logger.info("Fronttier finalized successfuly")
     } else {
       logger.error("There were errors while downloading the dependencies:")
@@ -158,7 +153,7 @@ class Fronttier(val workingDir : FileUrl, val destination : FileUrl, val parsers
       database.delete(dependency)
       None
     } else {
-      logger.error(s"$dependency not installed at the destination location")
+      logger.info(s"$dependency not installed at the destination location")
       Some(UninstalledDependencyException(dependency))
     }
   }
@@ -175,14 +170,14 @@ class Fronttier(val workingDir : FileUrl, val destination : FileUrl, val parsers
       database.clear()
       None
     } else {
-      logger.error("There are no dependencies to remove")
+      logger.info("There are no dependencies to remove")
       Some(EmptyLocationException(destination.pathString))
     }
   }
 
   def isInstalled(dependency : Dependency) = database.isInstalled(dependency)
 
-  def isInCache(dependency : Dependency) = cache.exists(dependency)
+  def isInCache(dependency : Dependency) = cache.exists(dependency)(this)
 
   lazy val cache = configuration.cache
 
@@ -191,6 +186,9 @@ class Fronttier(val workingDir : FileUrl, val destination : FileUrl, val parsers
   def configuration(location : FileUrl) : Option[Configuration] = {
     for (parser <- parserFileAt(location)) yield parser.parseAt(workingDir)
   }
+
+  def fileList =
+    database.inverseDependencyTree.flatten.map(dep => database.files(dep)).flatten
 }
 
 object Fronttier {
@@ -212,6 +210,8 @@ object Fronttier {
   }
 
   def apply(destination: FileUrl) : Fronttier = apply(destination, FronttierDefaults.defaults.toConfig)
+
+  def apply(destination: String) : Fronttier = apply(destination.toFile, FronttierDefaults.defaults.toConfig)
 
 }
 

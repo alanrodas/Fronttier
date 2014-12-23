@@ -1,6 +1,6 @@
 organization := Fronttier.organization
 
-name := Fronttier.name("cli")
+name := "play-fronttier"
 
 version := Fronttier.version
 
@@ -10,8 +10,8 @@ crossScalaVersions := Fronttier.crossScalaVersions
 
 publishTo <<= version {Fronttier.publishLocation}
 
-resolvers += "alanrodas" at "http://alanrodas.com/maven/releases"
+resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq(
-  "com.alanrodas" %% "scaland-cli" % "0.2"
+	"com.typesafe.play" %% "play" % "2.3.6"
 )

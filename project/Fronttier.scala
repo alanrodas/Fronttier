@@ -4,7 +4,7 @@ import sbt._
 
 object Fronttier {
   lazy val organization = "com.alanrodas"
-  lazy val version = "0.1"
+  lazy val version = "0.2"
   lazy val scalaVersion = "2.11.4"
   lazy val crossScalaVersions = Seq("2.10.4","2.11.4")
   lazy val name = "fronttier"

@@ -1,23 +1,17 @@
-/** ********************************************************************************************
-  * Testing
-  * Version 0.1
-  *
-  * The primary distribution site is
-  *
-  * http://scalavcs.alanrodas.com
-  *
-  * Copyright 2014 alanrodas
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
-  * except in compliance with the License. You may obtain a copy of the License at
-  *
-  * http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software distributed under the
-  * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
-  * either express or implied. See the License for the specific language governing permissions
-  * and limitations under the License.
-  * *********************************************************************************************/
+/*
+ * Copyright 2014 Alan Rodas Bonjour
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
+
 package com.alanrodas.fronttier.cli
 
 import com.alanrodas.fronttier._
@@ -26,7 +20,7 @@ import com.alanrodas.fronttier.parsing._
 
 import com.alanrodas.scaland.cli._
 import com.alanrodas.scaland.cli.runtime._
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.alanrodas.scaland.logging._
 
 import language.postfixOps
 
@@ -86,19 +80,11 @@ object FronttierCLI extends CLIApp with LazyLogging {
 
   private def errorHandledExecution(config : FronttierConfiguration)(f : (FronttierConfiguration) => Unit) = {
     try {
-      logger.setAsInfo
+      logger.level = Info
       logger.info("Starting fronttier...")
       config.configureLogger(logger)
       f(config)
     } catch {
-      //case e : java.util.NoSuchElementException =>
-      //	terminal.error(s"The configuration format $configParser is not valid.")
-      //case e : java.io.FileNotFoundException =>
-      //	terminal.error(s"The configuration file $fileName was not found.")
-      //case e : ParsingException =>
-      //	terminal.error(s"The configuration file $fileName has errors.\n" + e.getMessage)
-      //case e: UnnavailableDependencyException =>
-      //  logger.error(e.getMessage)
       case e: FileNameDeclarationsException =>
         logger.error(e.getMessage)
       case e: IllegalCommandLineArgumentsException =>
@@ -113,23 +99,6 @@ object FronttierCLI extends CLIApp with LazyLogging {
     }
   }
 
-  /*
-  private def download(configuration : Configuration, config : FronttierConfiguration)
-      (implicit database : FronttierDatabase): FronttierDatabase = {
-    // Do the force
-    if (config.force)  logger.info("Forcing enabled: Deleting local elements")
-    Fronttier.deleteAll(config.destination)
-    database.clear
-    // Do the cache
-    config.cache match {
-      case Cache(path) => logger.info("Using cache at: " + path.pathString)
-      case NoCache => logger.info("Not using cache")
-    }
-    logger.info("Downloading elements to: " + config.destination)
-    implicit val parsers = Fronttier.parsers
-    configuration.download(config.destination, config)(parsers, database)
-  }
-*/
   /** Download all dependencies from the configuration file at current location. */
   root accepts(
       // Ignored & deprecated
@@ -148,7 +117,7 @@ object FronttierCLI extends CLIApp with LazyLogging {
       flag named "use-cache"
   ) does { cmd =>
     errorHandledExecution(getConfiguration(cmd)){ config =>
-      Fronttier(config).downloadRoot
+      Fronttier(config).downloadRoot()
     }
   }
 
@@ -184,7 +153,7 @@ object FronttierCLI extends CLIApp with LazyLogging {
       logger.info(s"Installing dependency: $dependency")
       val result = Fronttier(config).download(dependency)
       if (result.nonEmpty) {
-        logger.setAsInfo
+        logger.level = Info
         logger.info("Fronttier finalized successfuly")
       }
     }
@@ -222,7 +191,7 @@ object FronttierCLI extends CLIApp with LazyLogging {
       logger.info(s"Uninstalling dependency: $dependency")
       val result = Fronttier(config).delete(dependency)
       if (result.isEmpty) {
-        logger.setAsInfo
+        logger.level = Info
         logger.info("Fronttier finalized successfuly")
       }
     }
@@ -249,7 +218,7 @@ object FronttierCLI extends CLIApp with LazyLogging {
       logger.info(s"Deleting all dependencies")
       val result = Fronttier(config).deleteAll()
       if (result.isEmpty) {
-        logger.setAsInfo
+        logger.level = Info
         logger.info("Fronttier finalized successfuly")
       }
     }
@@ -266,38 +235,8 @@ object FronttierCLI extends CLIApp with LazyLogging {
       arg named "load" alias "L" taking 10 values,
       // Still usable
       flag named "force" alias "f",
-      flag named "verbose" alias "v"
-  ) receives (
-      value named "group" mandatory,
-      value named "name" mandatory,
-      value named "version" mandatory
-  ) does { cmd =>
-    errorHandledExecution(getConfiguration(cmd)){ config =>
-      val (group, name, version) =
-        ((cmd value "group").valueAs[String], (cmd value "name").valueAs[String], (cmd value "version").valueAs[String])
-      clRequire(group.nonEmpty, "The group of the dependency cannot be empty")
-      clRequire(name.nonEmpty, "The name of the dependency cannot be empty")
-      clRequire(version.nonEmpty, "The version of the dependency cannot be empty")
-
-      val dependency = Dependency(group, name, version)
-      val fronttier = Fronttier(config.copy(useCache = true))
-      fronttier.download(dependency)
-      fronttier.delete(dependency)
-    }
-  }
-
-  /** Remove a dependency from cache */
-  command named "uncache" accepts(
-      // Ignored & deprecated
-      flag named "global" alias "g",
-      flag named "local" alias "l",
-      flag named "nocache" alias "n",
-      arg named "filename" alias "F" taking 1 as "fronttier.ftt",
-      arg named "config" alias "c" taking 1 as "fronttier",
-      arg named "load" alias "L" taking 10 values,
-      // Still usable
-      flag named "force" alias "f",
       flag named "verbose" alias "v",
+      arg named "destination" alias "d" taking 1 as ".",
       // New and renamed
       flag named "no-cache",
       flag named "use-cache"
@@ -313,7 +252,46 @@ object FronttierCLI extends CLIApp with LazyLogging {
       clRequire(name.nonEmpty, "The name of the dependency cannot be empty")
       clRequire(version.nonEmpty, "The version of the dependency cannot be empty")
 
+      val dependency = Dependency(group, name, version)
+      implicit val fronttier = Fronttier(config.copy(useCache = true))
+      val isInstalled = fronttier.isInstalled(dependency)
+      fronttier.download(dependency)
+      if (!isInstalled) fronttier.delete(dependency)
+      fronttier.database.deleteThis()
+    }
+  }
+
+  /** Remove a dependency from cache */
+  command named "uncache" accepts(
+      // Ignored & deprecated
+      flag named "global" alias "g",
+      flag named "local" alias "l",
+      flag named "nocache" alias "n",
+      arg named "filename" alias "F" taking 1 as "fronttier.ftt",
+      arg named "config" alias "c" taking 1 as "fronttier",
+      arg named "load" alias "L" taking 10 values,
+      // Still usable
+      flag named "force" alias "f",
+      flag named "verbose" alias "v",
+      arg named "destination" alias "d" taking 1 as ".",
+      // New and renamed
+      flag named "no-cache",
+      flag named "use-cache"
+  ) receives (
+      value named "group" mandatory,
+      value named "name" mandatory,
+      value named "version" mandatory
+  ) does { cmd =>
+    errorHandledExecution(getConfiguration(cmd)){ config =>
+      val (group, name, version) =
+        ((cmd value "group").valueAs[String], (cmd value "name").valueAs[String], (cmd value "version").valueAs[String])
+      clRequire(group.nonEmpty, "The group of the dependency cannot be empty")
+      clRequire(name.nonEmpty, "The name of the dependency cannot be empty")
+      clRequire(version.nonEmpty, "The version of the dependency cannot be empty")
+
+      implicit val fronttier = Fronttier(config.copy(useCache = true))
       Cache().delete(Dependency(group, name, version))
+      fronttier.database.deleteThis()
     }
   }
 
@@ -328,15 +306,17 @@ object FronttierCLI extends CLIApp with LazyLogging {
       arg named "load" alias "L" taking 10 values,
       // Still usable
       flag named "force" alias "f",
-      flag named "verbose" alias "v"
-  ) receives (
-      value named "group" mandatory,
-      value named "name" mandatory,
-      value named "version" mandatory
+      flag named "verbose" alias "v",
+      arg named "destination" alias "d" taking 1 as ".",
+          // New and renamed
+      flag named "no-cache",
+      flag named "use-cache"
   ) does { cmd =>
     errorHandledExecution(getConfiguration(cmd)){ config =>
 
+      implicit val fronttier = Fronttier(config.copy(useCache = true))
       Cache().clear()
+      fronttier.database.deleteThis()
     }
   }
   ////////////////////////////////////////////////////
@@ -353,6 +333,7 @@ object FronttierCLI extends CLIApp with LazyLogging {
       // Still usable
       flag named "force" alias "f",
       flag named "verbose" alias "v",
+      arg named "destination" alias "d" taking 1 as ".",
       // New and renamed
       flag named "no-cache",
       flag named "use-cache"
@@ -372,6 +353,7 @@ object FronttierCLI extends CLIApp with LazyLogging {
       // Still usable
       flag named "force" alias "f",
       flag named "verbose" alias "v",
+      arg named "destination" alias "d" taking 1 as ".",
       // New and renamed
       flag named "no-cache",
       flag named "use-cache"
@@ -381,4 +363,5 @@ object FronttierCLI extends CLIApp with LazyLogging {
 
   }
   ////////////////////////////////////////////////////
+
 }

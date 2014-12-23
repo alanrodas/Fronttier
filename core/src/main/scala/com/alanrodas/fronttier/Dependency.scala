@@ -1,28 +1,22 @@
-/** ********************************************************************************************
-  * Testing
-  * Version 0.1
-  *
-  * The primary distribution site is
-  *
-  * http://scalavcs.alanrodas.com
-  *
-  * Copyright 2014 alanrodas
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
-  * except in compliance with the License. You may obtain a copy of the License at
-  *
-  * http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software distributed under the
-  * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
-  * either express or implied. See the License for the specific language governing permissions
-  * and limitations under the License.
-  * *********************************************************************************************/
+/*
+ * Copyright 2014 Alan Rodas Bonjour
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
+
 package com.alanrodas.fronttier
 
 import com.alanrodas.fronttier.io._
 import com.alanrodas.fronttier.parsing._
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.alanrodas.scaland.logging._
 import rapture.fs._
 import platform.adaptive
 import rapture.net._
@@ -53,7 +47,13 @@ class Dependency(val group: String, val name: String, val version: String, val m
       (implicit fronttier : Fronttier):(Option[Configuration], Seq[FronttierException]) = {
     val maybeConf = (for (repo <- repositories) yield repo.download(destination, this)).find(_.isDefined).flatten
     if (maybeConf.isEmpty) (None, Seq(UnnavailableDependencyException(this, repositories)))
-    else (Some(maybeConf.get._1), maybeConf.get._2)
+    else {
+      val config = maybeConf.get._1
+      val errors = config.dependencies.foldLeft(maybeConf.get._2) { (errors, dependency) =>
+        dependency.download(destination, repositories)._2
+      }
+      (Some(config), errors)
+    }
 
   }
 }

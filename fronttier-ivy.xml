@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE fronttier PUBLIC "-/Fronttier/xmlattr.dtd"
-    "http://fronttier.alanrodas.com/dtd/xmlattr.dtd">
+<!DOCTYPE fronttier PUBLIC "-/Fronttier/xmlattr.dtd" "http://fronttier.alanrodas.com/dtd/xmlattr.dtd">
 <fronttier group="com.alanrodas" name="fronttier" version="0.2">
     <repositories>
         <repository type="git" url="git@github.com:alanrodas/bootstrap-blockquotes.git"/>

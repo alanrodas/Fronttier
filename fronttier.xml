@@ -2,8 +2,8 @@
 <!DOCTYPE fronttier PUBLIC "-/Fronttier/xml.dtd" "http://fronttier.alanrodas.com/dtd/xml.dtd">
 <fronttier>
     <group>com.alanrodas</group>
-    <name>fronttier</name>
-    <version>0.2</version>
+    <name>fronttier-demo</name>
+    <version>1.0-SNAPSHOT</version>
     <repositories>
         <repository>
             <type>git</type>

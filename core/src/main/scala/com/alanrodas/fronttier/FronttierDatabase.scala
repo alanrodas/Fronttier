@@ -1,5 +1,18 @@
-package com.alanrodas.fronttier
+/*
+ * Copyright 2014 Alan Rodas Bonjour
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 
+package com.alanrodas.fronttier
 
 import com.alanrodas.fronttier.parsers._
 import com.alanrodas.fronttier.io._
@@ -44,16 +57,13 @@ case class FronttierDatabase(val location : FileUrl) {
     this
   }
 
-  def save(dependency : Dependency) = ???
+  // def save(dependency : Dependency) = ???
 
   def delete(dependency : Dependency) = {
     if (isInstalled(dependency)) {
       val contents = path.contents
-      println("CONTENTS ARE " + contents)
       val start = contents.indexOf(dependency.toString.quoted + " {")
-      println(Console.MAGENTA + "START IS " + start)
       val end = contents.indexOf("}", start) + 1
-      println(Console.MAGENTA + "END IS " + end)
       path.remove(start, end)
     }
     update()
@@ -64,9 +74,7 @@ case class FronttierDatabase(val location : FileUrl) {
     if (isInstalled(config.currentDependency)) {
       val contents = path.contents
       val start = contents.indexOf(config.currentDependency.toString.quoted + "\\s{")
-      println(Console.MAGENTA + "START IS " + start)
       val end = contents.indexOf("}", start) + 1
-      println(Console.MAGENTA + "END IS " + end)
       path.remove(start, end)
     }
     update()
@@ -138,6 +146,10 @@ case class FronttierDatabase(val location : FileUrl) {
 
   def independent = {
     installed.filter(each => dependencies(each).isEmpty)
+  }
+
+  def deleteThis() = {
+    path.delete()
   }
 }
 
